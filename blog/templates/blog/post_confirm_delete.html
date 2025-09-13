@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head><title>Delete Post</title></head>
-<body>
-  <h1>Are you sure you want to delete "{{ post.title }}"?</h1>
+{% extends 'blog/base.html' %}
+{% block title %}Delete Post{% endblock %}
+{% block content %}
+  <h1>⚠️ Delete "{{ post.title }}"?</h1>
   <form method="POST">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
+    <a href="{% url 'post_list' %}">Cancel</a>
   </form>
-  <a href="/">Cancel</a>
-</body>
-</html>
+{% endblock %}

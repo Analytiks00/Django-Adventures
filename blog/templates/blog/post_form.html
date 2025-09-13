@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head><title>New Post</title></head>
-<body>
+{% extends 'blog/base.html' %}
+{% block title %}{{ form.instance.pk|yesno:"Edit Post,New Post" }}{% endblock %}
+{% block content %}
   <h1>{{ form.instance.pk|yesno:"Edit Post,New Post" }}</h1>
   <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button type="submit">💾 Save</button>
   </form>
-  <a href="/">Cancel</a>
-</body>
-</html>
+{% endblock %}
