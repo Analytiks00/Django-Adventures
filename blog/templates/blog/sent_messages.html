@@ -1,0 +1,8 @@
+<h1>Sent Messages</h1>
+<ul>
+  {% for msg in messages %}
+    <li>To <b>{{ msg.receiver }}</b>: {{ msg.content }} <i>({{ msg.timestamp }})</i></li>
+  {% empty %}
+    <li>No sent messages</li>
+  {% endfor %}
+</ul>

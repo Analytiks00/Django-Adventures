@@ -1,0 +1,26 @@
+/* Light mode */
+body.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Dark mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Navbar styling */
+nav {
+    padding: 10px;
+    background: #f0f0f0;
+}
+body.dark-mode nav {
+    background: #1f1f1f;
+}
+
+button {
+    margin-left: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
