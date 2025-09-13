@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head><title>{{ post.title }}</title></head>
-<body>
-  <h1>{{ post.title }}</h1>
-  <p>{{ post.content }}</p>
-  <small>Posted on {{ post.created_at }}</small>
-  <br><br>
-  <a href="/">Back to all posts</a>
-</body>
-</html>
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<small>Posted on {{ post.created_at }}</small>
+<br><br>
+<a href="/">Back</a> | 
+<a href="{{ post.id }}/edit/">Edit</a> | 
+<a href="{{ post.id }}/delete/">Delete</a>
