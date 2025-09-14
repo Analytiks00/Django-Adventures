@@ -16,16 +16,20 @@ def post_detail(request, pk):
 
 # create new post
 def post_new(request):
+    if not request.user.is_authenticated:
+        return redirect('login')  # we’ll set up auth later
+
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)   # don’t save yet
-            post.author = request.user       # attach the logged-in user
+            post = form.save(commit=False)
+            post.author = request.user  
             post.save()
             return redirect('post_list')
     else:
         form = PostForm()
     return render(request, 'blog/post_form.html', {'form': form})
+
 
 # edit existing post
 def post_edit(request, pk):
@@ -61,7 +65,9 @@ def signup(request):
 
 
 
-# send message
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def send_message(request):
     if request.method == "POST":
         form = MessageForm(request.POST)
@@ -74,12 +80,26 @@ def send_message(request):
         form = MessageForm()
     return render(request, 'blog/send_message.html', {'form': form})
 
-# inbox
+@login_required
 def inbox(request):
     messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
     return render(request, 'blog/inbox.html', {'messages': messages})
 
-# sent messages
+@login_required
 def sent_messages(request):
     messages = Message.objects.filter(sender=request.user).order_by('-timestamp')
     return render(request, 'blog/sent_messages.html', {'messages': messages})
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # auto login after signup
+            return redirect('post_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'blog/signup.html', {'form': form})

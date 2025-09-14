@@ -1,28 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}My Blog{% endblock %}</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; }
-    h1, h2 { color: #333; }
-    a { text-decoration: none; color: #007bff; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
-    .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
-    .navbar { margin-bottom: 20px; }
-    .navbar a { margin-right: 15px; font-weight: bold; }
-    button { padding: 6px 12px; border: none; background: #007bff; color: white; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-  </style>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'blog/style.css' %}">
 </head>
-<body>
-  <div class="container">
-    <div class="navbar">
-      <a href="{% url 'post_list' %}">🏠 Home</a>
-      <a href="{% url 'post_new' %}">➕ New Post</a>
-    </div>
-    {% block content %}{% endblock %}
-  </div>
+<body class="light-mode">
+
+    <!-- Navbar with dark mode toggle -->
+    <nav>
+        <a href="{% url 'post_list' %}">Home</a> |
+        <a href="{% url 'inbox' %}">Inbox</a> |
+        <a href="{% url 'sent_messages' %}">Sent</a> |
+        <a href="{% url 'send_message' %}">Send Message</a>
+        <button id="theme-toggle">🌙 Dark Mode</button>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'blog/theme.js' %}"></script>
+
+    {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+  <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Signup</a></p>
+{% endif %}
+
 </body>
 </html>
+
